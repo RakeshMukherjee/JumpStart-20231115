@@ -31,11 +31,22 @@ object HomeController:
    * Implement controller action that deletes the task with ID, and redirect to the index page.
    * Expectation: The matching task should no longer be in the list
    */
-  def deleteTask(taskId: Long) = ???
+
+  @Post("/task/delete/:taskId")
+  def deleteTask(@Param taskId: Long) = Action{ i_ =>
+    TaskList.deleteTask(task => task.id == taskId)
+    Redirect(HomeController.index)
+
+  }
 
   /**
    * Implement controller action that completes the task with ID, and redirect to the index page.
    * Expectation: The matching task should be marked as completed
    */
-  def completeTask(taskId: Long) = ???
+
+  @Post("/task/complete/:taskId")
+  def completeTask(@Param taskId: Long) = Action{ _ =>
+    TaskList.completeTask(task => task.id == taskId)
+    Redirect(HomeController.index)
+  }
 

@@ -50,8 +50,25 @@ case class IndexPage(tasks: List[Task], addTaskMapping: Mapping[String]):
          *                button > Complete [Marks task as completed]
          *                button > Delete [Deletes task]
          */
-      ),
 
+        table (cls:="tui very basic table",
+         tbody(
+           tasks.map(task =>
+             tr(
+               td(cls:="collapsing", task.id),
+               td(cls:="collapsing", task.description),
+               td(cls:="collapsing",
+                 form(display := "inline-block", method := "POST", action := HomeController.completeTask(task.id).endpoint.url)(
+                 button(cls := "ui primary button",  ifTrue(task.isCompleted,  disabled), "Complete")),
+
+                 form(display := "inline-block", method := "POST", action := HomeController.deleteTask(task.id).endpoint.url)(
+                     button(cls := "ui red button", "Delete"))
+               )
+             )
+         )
+         )
+         ),
+        
       script(tpe := "text/javascript", src := "https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"),
       script(tpe := "text/javascript", src := "https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.js"),
       script(tpe := "text/javascript",
@@ -61,5 +78,6 @@ case class IndexPage(tasks: List[Task], addTaskMapping: Mapping[String]):
             |  */
             |""".stripMargin)
       )
+    )
     )
   )
