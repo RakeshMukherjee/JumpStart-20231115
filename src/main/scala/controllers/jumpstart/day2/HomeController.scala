@@ -33,7 +33,7 @@ object HomeController:
    */
 
   @Post("/task/delete/:taskId")
-  def deleteTask(@Param taskId: Long) = Action{ i_ =>
+  def deleteTask(@Param taskId: Long) = Action{ _ =>
     TaskList.deleteTask(task => task.id == taskId)
     Redirect(HomeController.index)
 
